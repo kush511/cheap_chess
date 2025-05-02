@@ -26,11 +26,11 @@ io.on('connection',function(uniquesocket) {
 
     if(!players.white){
       players.white = uniquesocket.id;
-      uniquesocket.emit(playerRole,"w");
+      uniquesocket.emit("playerRole","w");
     }
     else if(!players.black){
       players.black = uniquesocket.id;
-      uniquesocket.emit(playerRole,"b");
+      uniquesocket.emit("playerRole","b");
     }
     else{
       uniquesocket.emit( "Game is full. Please wait for a player to leave.");

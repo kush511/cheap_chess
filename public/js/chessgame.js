@@ -25,14 +25,16 @@ const renderBoard = () => {
                 pieceElement.classList.add("piece", square.color==='w'? "white":"black")
                 pieceElement.innerText = getPieceUnicode(square)    
                 pieceElement.draggable=playerRole===square.color
-                pieceElement.addEventListener("dragstart",(e)=>{
-                    if(pieceElement.draggable){
-                        draggedPiece = pieceElement;
-                        sourceSquare = {row: rowindex, col: squareindex};
-                        e.dataTransfer.setData("text/plain", "");
 
-                    }
-                })
+
+              pieceElement.addEventListener("dragstart", (e) => {
+    if (pieceElement.draggable && playerRole === square.color) {
+        draggedPiece = pieceElement;
+        sourceSquare = { row: rowindex, col: squareindex };
+        e.dataTransfer.setData("text/plain", "");
+    }
+});
+
 
                 pieceElement.addEventListener("dragend",()=>{
                     draggedPiece = null;
@@ -61,10 +63,24 @@ const renderBoard = () => {
         
     })
     
+    if(playerRole === 'b') {
+        boardElement.classList.add('flipped');
+    }
+    else {
+        boardElement.classList.remove('flipped');
+    }
 }
 
-const handleMove = () => {
-}
+const handleMove = (source, target) => {
+    const move = {
+        from: `${String.fromCharCode(source.col + 97)}${8 - source.row}`,
+        to: `${String.fromCharCode(target.col + 97)}${8 - target.row}`,
+        promotion: 'q' // Queen for simplicity
+    };
+    chess.move(move);  // Update the chess.js state
+    socket.emit("move", move);  // Send the move to the server
+    renderBoard();  // Re-render the board after the move
+};
 
 const getPieceUnicode = (piece) => {
     const unicodePieces = {
@@ -77,6 +93,26 @@ const getPieceUnicode = (piece) => {
     return unicodePieces[key] || "";
 };
 
+socket.on("playerRole", (role) => {
+    playerRole = role;
+    renderBoard();
+})
+
+socket.on("spectator",()=>{
+    playerRole=null
+    renderBoard();
+})
+
+socket.on("boardState", (fen) => {
+    chess.load(fen);
+    renderBoard();
+})
+
+socket.on("move", (move) => {
+    chess.move(move);
+    
+    renderBoard();
+});
 
 renderBoard();
 
