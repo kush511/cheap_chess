@@ -9,11 +9,11 @@ let playerRole = null;
 const renderBoard = () => {
     const board = chess.board();
     boardElement.innerHTML = ''; // Clear the board element
-    board.foreach((row, rowindex) => {
-        row.foreach((square, squareindex) => {
+    board.forEach((row, rowindex) => {
+        row.forEach((square, squareindex) => {
 
             // for pattern of chessboard
-            const squareElement = document.create("div")
+            const squareElement = document.createElement("div")
             squareElement.classList.add("square",
              (rowindex + squareindex) % 2 === 0 ? "light" : "dark");
 
