@@ -1,4 +1,5 @@
-Chess Game
+**Chess Game**
+
 This is an online chess game built with Node.js, Socket.io, Express, and Chess.js. It allows two players to play chess in real-time with drag-and-drop functionality for the chess pieces. The game state is synchronized across all clients, ensuring that each player sees the same game board.
 
 Features
@@ -30,19 +31,16 @@ Node.js: Ensure you have Node.js installed. You can download it from here.
 Steps to Run Locally
 Clone this repository:
 
-bash
-Copy code
+
 git clone https://github.com/kush511/cheap_chess.git
 cd cheap_chess
 Install the required dependencies:
 
-bash
+
 Copy code
 npm install
 Run the application:
 
-bash
-Copy code
 npm start
 Open your browser and navigate to http://localhost:3000 to start playing the game.
 
