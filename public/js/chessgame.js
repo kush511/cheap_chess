@@ -32,6 +32,7 @@ const renderBoard = () => {
         draggedPiece = pieceElement;
         sourceSquare = { row: rowindex, col: squareindex };
         e.dataTransfer.setData("text/plain", "");
+        pieceElement.classList.add("dragging");
     }
 });
 
@@ -39,6 +40,7 @@ const renderBoard = () => {
                 pieceElement.addEventListener("dragend",()=>{
                     draggedPiece = null;
                     sourceSquare = null;
+                    pieceElement.classList.remove("dragging");
                 })
 
                 squareElement.appendChild(pieceElement);
